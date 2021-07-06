@@ -7,12 +7,19 @@ import org.bsoftware.ward.exceptions.ApplicationNotSetUpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import oshi.SystemInfo;
-import oshi.hardware.*;
+import oshi.hardware.CentralProcessor;
+import oshi.hardware.GlobalMemory;
+import oshi.hardware.HWDiskStore;
+import oshi.hardware.PhysicalMemory;
 import oshi.software.os.OperatingSystem;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.Properties;
 
 /**
  * InfoService provides various information about machine, such as processor name, core count, Ram amount, etc.
@@ -124,7 +131,7 @@ public class InfoService
         OperatingSystem.OSVersionInfo osVersionInfo = systemInfo.getOperatingSystem().getVersionInfo();
         GlobalMemory globalMemory = systemInfo.getHardware().getMemory();
 
-        machineDto.setOperatingSystem(operatingSystem.getFamily() + " " + osVersionInfo.getVersion() + ", " + osVersionInfo.getCodeName());
+        machineDto.setOperatingSystem(operatingSystem.getFamily() + " " + osVersionInfo.getVersion());
         machineDto.setTotalRam(getConvertedCapacity(globalMemory.getTotal()) + " Ram");
 
         Optional<PhysicalMemory> physicalMemoryOptional = globalMemory.getPhysicalMemory().stream().findFirst();

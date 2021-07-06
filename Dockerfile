@@ -1,5 +1,5 @@
 # Base image with maven installed already
-FROM maven:3.6.3-jdk-8 as builder
+FROM maven:latest as builder
 
 # Copy whole project inside docker
 COPY . .
